@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour
     public float moveSpeed = 3f;
     private float moveHorz;
     private float moveVert;
+    public float multi;
 
     public float mouseSense = 2f;
     private float vertRot = 0f;
@@ -35,7 +36,7 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        movePlayer();
+        movePlayer(multi);
     }
 
     void rotateCamera()
@@ -49,9 +50,9 @@ public class playerController : MonoBehaviour
         cameraTrans.localRotation = Quaternion.Euler(vertRot, 0, 0);
     }    
 
-    void movePlayer()
+    void movePlayer(float mult)
     {
-        Vector3 movement = (transform.right * moveHorz + transform.forward * moveVert).normalized;
+        Vector3 movement = (transform.right * moveHorz + transform.forward * moveVert * mult).normalized;
         Vector3 targetVelocity = movement * moveSpeed;
 
         Vector3 velocity = rb.velocity;
