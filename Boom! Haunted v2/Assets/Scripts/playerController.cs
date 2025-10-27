@@ -8,11 +8,14 @@ public class playerController : MonoBehaviour
     public float moveSpeed = 3f;
     private float moveHorz;
     private float moveVert;
-    public float multi;
 
     public float mouseSense = 2f;
     private float vertRot = 0f;
     private Transform cameraTrans;
+
+    private float maxHaunt = 3;
+    private float currentHaunt;
+    [SerializeField] private HauntBar haunting;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,9 @@ public class playerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         cameraTrans = Camera.main.transform;
+
+        currentHaunt = maxHaunt;
+        haunting.UpdateHauntingBar(maxHaunt, currentHaunt); // also update when interaction on light // program interaction script first
 
         Cursor.lockState = CursorLockMode.Locked; // locks mouse
         Cursor.visible = false; // hides mouse
@@ -36,7 +42,7 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        movePlayer(multi);
+        movePlayer();
     }
 
     void rotateCamera()
@@ -50,9 +56,9 @@ public class playerController : MonoBehaviour
         cameraTrans.localRotation = Quaternion.Euler(vertRot, 0, 0);
     }    
 
-    void movePlayer(float mult)
+    void movePlayer()
     {
-        Vector3 movement = (transform.right * moveHorz + transform.forward * moveVert * mult).normalized;
+        Vector3 movement = (transform.right * moveHorz + transform.forward * moveVert).normalized;
         Vector3 targetVelocity = movement * moveSpeed;
 
         Vector3 velocity = rb.velocity;
@@ -64,5 +70,11 @@ public class playerController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
+    }
+
+    private void OnMouseDown()
+    {
+        currentHaunt -= Random.Range(0.5f, 1.5f);
+        haunting.UpdateHauntingBar(maxHaunt, currentHaunt-1);
     }
 }
