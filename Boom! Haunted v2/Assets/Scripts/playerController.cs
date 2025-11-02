@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour
     public float moveSpeed = 3f;
     private float moveHorz;
     private float moveVert;
+    public float ascending;
 
     public float mouseSense = 2f;
     private float vertRot = 0f;
@@ -24,11 +25,13 @@ public class playerController : MonoBehaviour
         rb.freezeRotation = true;
         cameraTrans = Camera.main.transform;
 
-        currentHaunt = maxHaunt;
-        haunting.UpdateHauntingBar(maxHaunt, currentHaunt); // also update when interaction on light // program interaction script first
-
         Cursor.lockState = CursorLockMode.Locked; // locks mouse
         Cursor.visible = false; // hides mouse
+
+        currentHaunt = maxHaunt;
+        //haunting.UpdateHauntingBar(maxHaunt, currentHaunt); // also update when interaction on light // program interaction script first
+
+        
     }
 
     // Update is called once per frame
@@ -38,6 +41,10 @@ public class playerController : MonoBehaviour
         moveVert = Input.GetAxisRaw("Vertical");
 
         rotateCamera();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = new Vector3(rb.velocity.x, ascending, rb.velocity.z);
+        }
     }
 
     private void FixedUpdate()

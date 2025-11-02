@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class cubeMove : MonoBehaviour, IInteractable
 {
+    public AudioSource sound;
 
     public void Interact()
     {
-        Debug.Log(Random.Range(0, 100));
+        sound = GetComponent<AudioSource>();
+        sound.Play();
+        Debug.Log(323);
+
     }
 }
