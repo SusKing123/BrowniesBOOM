@@ -22,6 +22,6 @@ public class MenuController : MonoBehaviour
 
     public void backButton()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Main Menu");
     }
 }
