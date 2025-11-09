@@ -41,7 +41,7 @@ public class playerController : MonoBehaviour
         moveVert = Input.GetAxisRaw("Vertical");
 
         rotateCamera();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             rb.velocity = new Vector3(rb.velocity.x, ascending, rb.velocity.z);
         }

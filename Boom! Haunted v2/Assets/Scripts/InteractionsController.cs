@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 interface IInteractable
@@ -11,37 +12,39 @@ public class InteractionsController : MonoBehaviour
 {
     public Transform InteractorSource;
     public float InteractRange;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject UI;
+    private bool lookHaunt = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        bool haunting = false;
+        Ray r = new Ray(InteractorSource.position, InteractorSource.forward);
+        if (Physics.Raycast(r, out RaycastHit hitInfo, InteractRange))
         {
-            Ray r = new Ray(InteractorSource.position, InteractorSource.forward);
-            if (Physics.Raycast(r, out RaycastHit hitInfo, InteractRange))
+            if(hitInfo.collider.CompareTag("Haunt"))
             {
-                if(hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                haunting = true;
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    interactObj.Interact();
+                    if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                    {
+                        interactObj.Interact();
+                    }
                 }
             }
         }
 
-
-
-        // for immproved version:
-        // raycast where the player is looking
-
-        // If there is something there with the tag interactable
-            // have UI appear telling you to interact by pressing the button
-            // If that button pressed
-                // call interact from that obj
+        if (haunting && !lookHaunt)
+        {
+            UI.SetActive(true);
+            lookHaunt = true;
+        }
+        else if (!haunting && lookHaunt)
+        {
+            UI.SetActive(false);
+            lookHaunt = false;
+        }
 
     }
 }
