@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lightInteraction : MonoBehaviour
+public class lightInteraction : MonoBehaviour, IInteractable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioSource sound;
+    public GameObject bulb;
+    private bool played = false;
 
-    // Update is called once per frame
-    void Update()
+    public void Interact()
     {
-        
+        sound = GetComponent<AudioSource>(); // get audio listener
+        if(bulb.activeSelf)// if it is active
+        {
+            bulb.SetActive(false); // deactivate it
+            if(!played)
+            {
+                sound.Play();
+                played = true;
+            }
+        }
+        else
+        {
+            bulb.SetActive(true);
+        }
     }
 }
