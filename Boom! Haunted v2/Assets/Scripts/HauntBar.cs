@@ -5,22 +5,34 @@ using UnityEngine.UI;
 
 public class HauntBar : MonoBehaviour
 {
-    [SerializeField] private Image hauntBarSprite;
+    public Image hauntBar;
+    public float currHaunt = 0;
+    public float maxHaunt = 0;
 
-    private Camera camera;
 
     private void Start()
     {
-        camera = Camera.main;
+        hauntBar.fillAmount = 0;
     }
 
-    public void UpdateHauntingBar(float fullBar, float currentBar)
+    public void UpdateHauntingBar()
     {
-        hauntBarSprite.fillAmount = currentBar / fullBar;
+        currHaunt = Mathf.Clamp(currHaunt + 1, 0, maxHaunt);
+        float fill = currHaunt / maxHaunt;
+        StartCoroutine(SmoothFill(fill));
     }
 
-    private void Update()
+    IEnumerator SmoothFill(float fill)
     {
-        //transform.rotation = Quaternion.LookRotation(transform.position - camera.transform.position);
+        float duration = 0.3f;
+        float elapsed = 0f;
+        float start = hauntBar.fillAmount;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            hauntBar.fillAmount = Mathf.Lerp(start, fill, elapsed / duration);
+            yield return null;
+        }
     }
 }

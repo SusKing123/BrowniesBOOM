@@ -14,10 +14,6 @@ public class playerController : MonoBehaviour
     private float vertRot = 0f;
     private Transform cameraTrans;
 
-    private float maxHaunt = 3;
-    private float currentHaunt;
-    [SerializeField] private HauntBar haunting;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +23,6 @@ public class playerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked; // locks mouse
         Cursor.visible = false; // hides mouse
-
-        currentHaunt = maxHaunt;
-        //haunting.UpdateHauntingBar(maxHaunt, currentHaunt); // also update when interaction on light // program interaction script first
 
         
     }
@@ -77,11 +70,5 @@ public class playerController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
-    }
-
-    private void OnMouseDown()
-    {
-        currentHaunt -= Random.Range(0.5f, 1.5f);
-        haunting.UpdateHauntingBar(maxHaunt, currentHaunt-1);
     }
 }

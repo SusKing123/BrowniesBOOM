@@ -6,7 +6,8 @@ public class lightInteraction : MonoBehaviour, IInteractable
 {
     public AudioSource sound;
     public GameObject bulb;
-    private bool played = false;
+    private bool haunted = false;
+    public HauntBar haunt;
 
     public void Interact()
     {
@@ -14,10 +15,11 @@ public class lightInteraction : MonoBehaviour, IInteractable
         if(bulb.activeSelf)// if it is active
         {
             bulb.SetActive(false); // deactivate it
-            if(!played)
+            if(!haunted)
             {
                 sound.Play();
-                played = true;
+                haunt.UpdateHauntingBar();
+                haunted = true;
             }
         }
         else
