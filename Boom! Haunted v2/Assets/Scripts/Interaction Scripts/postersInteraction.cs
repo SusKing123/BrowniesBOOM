@@ -11,11 +11,10 @@ public class postersInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(played == false)
+        if(played == false && other.CompareTag("Player"))
         {
             sound = GetComponent<AudioSource>();
             sound.Play();
-            Debug.Log("hi");
             played = true;
         }
     }

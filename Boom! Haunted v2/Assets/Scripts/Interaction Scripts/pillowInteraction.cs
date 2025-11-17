@@ -36,11 +36,8 @@ public class pillowInteraction : MonoBehaviour, IInteractable
 
     IEnumerator waitToLaunch()
     {
-        
-
         yield return new WaitForSeconds(2f);
         launchPillow();
-        
     }
 
     void launchPillow()

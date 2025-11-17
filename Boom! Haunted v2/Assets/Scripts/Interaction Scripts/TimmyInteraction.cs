@@ -7,26 +7,42 @@ using UnityEngine.SceneManagement;
 public class TimmyInteraction : MonoBehaviour, IInteractable
 {
     public AudioSource sound;
-    private Collider tBox;
+    public GameObject timmy;
     public HauntBar haunt;
+    private bool changed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        tBox = GetComponent<Collider>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(haunt.currHaunt <= 5)
+        if(!changed)
         {
-            tBox.enabled = true;
+            changeTag();
         }
     }
 
     public void Interact()
     {
+        sound = GetComponent<AudioSource>();
+        sound.Play();
+        StartCoroutine(waitForLine());
+    }
+
+    void changeTag()
+    {
+        if (timmy.tag == "noHaunt")
+        {
+            timmy.tag = "Haunt";
+        }
+    }
+    IEnumerator waitForLine()
+    {
+        yield return new WaitForSeconds(11.7f);
         SceneManager.LoadScene("Level2");
     }
 }
