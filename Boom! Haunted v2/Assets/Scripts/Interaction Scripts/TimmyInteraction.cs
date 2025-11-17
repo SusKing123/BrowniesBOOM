@@ -20,7 +20,7 @@ public class TimmyInteraction : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-        if(!changed)
+        if(haunt.currHaunt == 5 && !changed)
         {
             changeTag();
         }
