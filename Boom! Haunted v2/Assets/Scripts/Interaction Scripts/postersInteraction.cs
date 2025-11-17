@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.RestService;
 using UnityEngine;
+
 
 public class postersInteraction : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioSource sound;
+    private bool played = false;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(played == false)
+        {
+            sound = GetComponent<AudioSource>();
+            sound.Play();
+            Debug.Log("hi");
+            played = true;
+        }
     }
 }

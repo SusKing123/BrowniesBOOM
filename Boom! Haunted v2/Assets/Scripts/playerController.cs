@@ -14,6 +14,8 @@ public class playerController : MonoBehaviour
     private float vertRot = 0f;
     private Transform cameraTrans;
 
+    public AudioSource sound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,7 @@ public class playerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // locks mouse
         Cursor.visible = false; // hides mouse
 
-        
+        StartCoroutine(waitToTalk());
     }
 
     // Update is called once per frame
@@ -70,5 +72,12 @@ public class playerController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
+    }
+
+    IEnumerator waitToTalk()
+    {
+        sound = GetComponent<AudioSource>();
+        yield return new WaitForSeconds(.4f);
+        sound.Play();
     }
 }

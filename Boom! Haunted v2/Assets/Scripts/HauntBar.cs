@@ -19,6 +19,7 @@ public class HauntBar : MonoBehaviour
     {
         currHaunt = Mathf.Clamp(currHaunt + 1, 0, maxHaunt);
         float fill = currHaunt / maxHaunt;
+        StopAllCoroutines();
         StartCoroutine(SmoothFill(fill));
     }
 
