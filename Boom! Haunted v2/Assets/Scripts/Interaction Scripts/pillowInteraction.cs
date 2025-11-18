@@ -43,17 +43,22 @@ public class pillowInteraction : MonoBehaviour, IInteractable
     void launchPillow()
     {
         Vector3 baseDir;
+        Vector3 randomOffset;
+        Vector3 finalDir;
         if (!thrown)
         {
-            baseDir = (transform.right + Vector3.up).normalized;
+            finalDir = (transform.right + Vector3.up).normalized;
+            launchForce = 20;
             thrown = true;
         }
         else
+        {
             baseDir = (transform.forward + Vector3.up).normalized;
-
-        Vector3 randomOffset = Random.insideUnitSphere * 2f;
-        Vector3 finalDir = (baseDir + randomOffset).normalized;
-
+            randomOffset = Random.insideUnitSphere * 2f;
+            finalDir = (baseDir + randomOffset).normalized;
+            launchForce = 10;
+        }
+            
         rb.AddForce(finalDir * launchForce, ForceMode.Impulse);
 
         Vector3 randomTorque = Random.insideUnitSphere * 20f;
